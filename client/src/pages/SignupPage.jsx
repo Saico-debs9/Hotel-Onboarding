@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/App.css'
+import '../styles/App.css';
+import BackButton from '../components/BackButton';
 
 const SignupPage = () => {
   const [form, setForm] = useState({ username: '', password: '', role: 'main' });
@@ -56,6 +57,7 @@ const SignupPage = () => {
           </div>
         </form>
       </div>
+      <BackButton />
     </div>
   );
 };

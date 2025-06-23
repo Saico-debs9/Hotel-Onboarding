@@ -4,7 +4,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import AdminDashboard from './pages/AdminDashboard';
 import HotelBookingPage from './pages/HotelBookingPage';
-import HotelAdminDashboard from './pages/AdminDashboard';
+import HotelAdminDashboard from './pages/HotelAdminDashboard';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path='/register' element={<SignupPage />} />
         <Route path="/hotel/:id/book" element={<HotelBookingPage />} />
 
-        {/* <Route path="/hoteladmin/dashboard" element={<HotelAdminDashboard />} /> */}
+        <Route path="/hoteladmin/dashboard" element={<HotelAdminDashboard />} />
         {/* ... other routes */}
       </Routes>
     </Router>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/App.css'
+import BackButton from '../components/BackButton';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -56,6 +57,7 @@ const LoginPage = () => {
         </form>
         </div>
       </div>
+      <BackButton />
     </div>
   );
 };

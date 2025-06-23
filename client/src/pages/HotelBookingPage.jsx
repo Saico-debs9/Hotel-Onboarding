@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/App.css'
+import BackButton from '../components/BackButton';
 
 const HotelBookingPage = () => {
   const { id } = useParams();
@@ -41,8 +43,8 @@ const HotelBookingPage = () => {
       <div className="container">
         <h2 className="headHome">Book Hotel: {hotel.name}</h2>
         <p className="text-muted mb-4">{hotel.address}</p>
-
-        <form onSubmit={handleSubmit} className="inputBox">
+    <div className='inputBox'>
+        <form onSubmit={handleSubmit} className="formBox">
           <input
             type="text"
             name="name"
@@ -95,7 +97,9 @@ const HotelBookingPage = () => {
             <button type="submit" className="btnHome">Book Now</button>
           </div>
         </form>
+        </div>
       </div>
+      <BackButton />
     </div>
   );
 };

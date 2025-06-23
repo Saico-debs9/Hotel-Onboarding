@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/App.css'
+import '../styles/App.css';
+import '../components/BackButton';
+import BackButton from '../components/BackButton';
 
 const AdminDashboard = () => {
     const [hotels, setHotels] = useState([]);
@@ -59,7 +61,8 @@ const AdminDashboard = () => {
     return (
         <div className="p-6 max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold mb-4">Add Hotel</h2>
-            <form onSubmit={handleSubmit} className="mb-6 space-y-2">
+            <div className='inputBox'>
+            <form onSubmit={handleSubmit} className="formBox">
                 {['name', 'address', 'logo', 'qr_code_url'].map(field => (
                     <input
                         key={field}
@@ -68,11 +71,12 @@ const AdminDashboard = () => {
                         placeholder={field}
                         value={form[field]}
                         onChange={handleChange}
-                        className="w-full border p-2 rounded"
+                        className="inputHome"
                     />
                 ))}
                 <button type="submit" className="btnHome">Add Hotel</button>
             </form>
+            </div>
 
             <h2 className="text-xl font-semibold mb-2">Hotels</h2>
             <table className="w-full border-collapse border border-gray-300">
@@ -111,25 +115,25 @@ const AdminDashboard = () => {
                 <div className="p-4 mt-4 bg-gray-200 rounded shadow">
                     <h3 className="text-lg font-bold mb-2">Edit Hotel</h3>
                     <input
-                        className="block mb-2 p-2 border rounded w-full"
+                        className="inputHome"
                         value={editingHotel.name}
                         onChange={e => setEditingHotel({ ...editingHotel, name: e.target.value })}
                         placeholder="Hotel Name"
                     />
                     <input
-                        className="block mb-2 p-2 border rounded w-full"
+                        className="inputHome"
                         value={editingHotel.address}
                         onChange={e => setEditingHotel({ ...editingHotel, address: e.target.value })}
                         placeholder="Address"
                     />
                     <input
-                        className="block mb-2 p-2 border rounded w-full"
+                        className="inputHome"
                         value={editingHotel.logo}
                         onChange={e => setEditingHotel({ ...editingHotel, logo: e.target.value })}
                         placeholder="Logo URL"
                     />
                     <input
-                        className="block mb-2 p-2 border rounded w-full"
+                        className="inputHome"
                         value={editingHotel.qr_code_url}
                         onChange={e => setEditingHotel({ ...editingHotel, qr_code_url: e.target.value })}
                         placeholder="QR Code URL"
@@ -140,10 +144,11 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             )}
-
+    <BackButton />
         </div>
-
+    
     );
+    
 };
 
 export default AdminDashboard;
