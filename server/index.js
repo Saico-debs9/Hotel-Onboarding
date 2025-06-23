@@ -12,6 +12,9 @@ app.use(express.json());
 const hotelRoutes = require('./routes/hotelRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const guestRoutes = require('./routes/guestRoutes');
+const authRoutes = require('./routes/authRoutes');
+
+app.use('/api/auth', authRoutes);
 
 app.use('/api/hotels', hotelRoutes);
 app.use('/api/bookings', bookingRoutes);
@@ -27,7 +30,7 @@ app.get('/', (req, res) => {
 
 // Sync DB and start server
 const PORT = process.env.PORT || 9090;
-db.sequelize.sync({ alter: true }).then(() => {
+db.sequelize.sync().then(() => {
   console.log('Database synced successfully!');
 
   app.listen(PORT,'0.0.0.0', () => {

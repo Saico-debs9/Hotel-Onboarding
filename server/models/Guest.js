@@ -15,7 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: {
       type: DataTypes.STRING,
+    },
+    hotel_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
+
   });
 
   return Guest;
