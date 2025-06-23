@@ -67,7 +67,7 @@ const HomePage = () => {
             {hotels.map((hotel) => (
               <tr key={hotel.id} onClick={() => handleRowClick(hotel.id)} className="cursor-pointer hover:bg-gray-100">
                 <td>
-                  <img src={hotel.logo || 'https://via.placeholder.com/100'} alt="Logo" className="logoImg" />
+                  <img src={hotel.logo} alt="Logo" className="logoImg" />
                 </td>
                 <td>{hotel.name}</td>
                 <td>{hotel.address}</td>

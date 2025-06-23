@@ -34,21 +34,68 @@ const HotelBookingPage = () => {
     }
   };
 
-  if (!hotel) return <div>Loading...</div>;
+  if (!hotel) return <div className="wrapper"><div className="container">Loading...</div></div>;
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Book {hotel.name}</h2>
-      <p className="mb-4 text-gray-600">{hotel.address}</p>
+    <div className="wrapper">
+      <div className="container">
+        <h2 className="headHome">Book Hotel: {hotel.name}</h2>
+        <p className="text-muted mb-4">{hotel.address}</p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" name="name" placeholder="Your Name" required className="w-full p-2 border rounded" value={formData.name} onChange={handleChange} />
-        <input type="email" name="email" placeholder="Email" required className="w-full p-2 border rounded" value={formData.email} onChange={handleChange} />
-        <input type="text" name="phone" placeholder="Phone" required className="w-full p-2 border rounded" value={formData.phone} onChange={handleChange} />
-        <input type="date" name="checkin_date" required className="w-full p-2 border rounded" value={formData.checkin_date} onChange={handleChange} />
-        <input type="date" name="checkout_date" required className="w-full p-2 border rounded" value={formData.checkout_date} onChange={handleChange} />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Book Now</button>
-      </form>
+        <form onSubmit={handleSubmit} className="inputBox">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            className="inputHome"
+            value={formData.name}
+            onChange={handleChange}
+          /><br />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            className="inputHome"
+            value={formData.email}
+            onChange={handleChange}
+          /><br />
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            required
+            className="inputHome"
+            value={formData.phone}
+            onChange={handleChange}
+          /><br />
+
+          <input
+            type="date"
+            name="checkin_date"
+            required
+            className="inputHome"
+            value={formData.checkin_date}
+            onChange={handleChange}
+          /><br />
+
+          <input
+            type="date"
+            name="checkout_date"
+            required
+            className="inputHome"
+            value={formData.checkout_date}
+            onChange={handleChange}
+          /><br />
+
+          <div className="inputBtn">
+            <button type="submit" className="btnHome">Book Now</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
