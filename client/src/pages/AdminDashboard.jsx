@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/App.css'
 
 const AdminDashboard = () => {
     const [hotels, setHotels] = useState([]);

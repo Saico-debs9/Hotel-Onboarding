@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/App.css'
 
 const SignupPage = () => {
   const [form, setForm] = useState({ username: '', password: '', role: 'main' });
@@ -22,17 +23,39 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <form onSubmit={handleSignup} className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-xl font-bold mb-4">Admin Signup</h2>
-        <input className="w-full p-2 mb-3 border" name="username" placeholder="Username" value={form.username} onChange={handleChange} />
-        <input className="w-full p-2 mb-3 border" type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
-        <select className="w-full p-2 mb-3 border" name="role" value={form.role} onChange={handleChange}>
-          <option value="main">Main Admin</option>
-          <option value="hotel">Hotel Admin</option>
-        </select>
-        <button className="w-full bg-blue-600 text-white p-2 rounded" type="submit">Signup</button>
-      </form>
+    <div className="wrapper">
+      <div className="container">
+        <h2 className="headHome">Admin Signup</h2>
+        <form onSubmit={handleSignup} className="formBox">
+          <input
+            className="inputHome"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+          /><br />
+          <input
+            className="inputHome"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          /><br />
+          <select
+            className="inputHome"
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+          >
+            <option value="main">Main Admin</option>
+            <option value="hotel">Hotel Admin</option>
+          </select><br />
+          <div className="inputBtn">
+            <button className="btnHome" type="submit">Signup</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
