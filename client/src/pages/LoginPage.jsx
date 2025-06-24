@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 // src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+=======
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../styles/App.css'
+import BackButton from '../components/BackButton';
+>>>>>>> booking-hotel
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +26,10 @@ const LoginPage = () => {
 
       alert('Login successful');
 
+<<<<<<< HEAD
       // Redirect based on role
+=======
+>>>>>>> booking-hotel
       if (res.data.role === 'main') {
         navigate('/admin/dashboard');
       } else {
@@ -30,6 +41,7 @@ const LoginPage = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
@@ -53,6 +65,36 @@ const LoginPage = () => {
           Login
         </button>
       </form>
+=======
+    <div className="wrapper">
+      <div className="container">
+        <h2 className="headHome">Admin Login</h2>
+        <div className='inputBox'>
+        <form onSubmit={handleLogin} className='formBox'>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="inputHome"
+            required
+          /><br />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="inputHome"
+            required
+          /><br />
+          <div className="inputBtn">
+            <button type="submit" className="btnHome">Login</button>
+          </div>
+        </form>
+        </div>
+      </div>
+      <BackButton />
+>>>>>>> booking-hotel
     </div>
   );
 };

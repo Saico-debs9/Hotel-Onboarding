@@ -1,156 +1,207 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 
 
 .wrapper {
-  min-height: 100vh;
-  background-color: #f7f7f7;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-bottom: 60px;
+    position: relative;
 }
 
 .container {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 1000px;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .headHome {
-  font-size: 28px;
-  font-weight: bold;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .authLinks {
-  display: flex;
-  gap: 10px;
-  padding-left: 80%;
+    display: flex;
+    gap: 10px;
+    padding-left: 80%;
     margin: 10px
 }
 
 .btnLink {
-  padding: 8px 16px;
-  background-color: #1d4ed8;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s;
+    padding: 8px 16px;
+    background-color: #1d4ed8;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
 .btnLink:hover {
-  background-color: #2563eb;
+    background-color: #2563eb;
 }
+
 .btnAction {
-  margin: 10px 5px;
-  padding: 10px;
-  width: 120px;
-  background-color: rgb(20, 164, 196);
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
+    margin: 10px 5px;
+    padding: 10px;
+    width: 120px;
+    background-color: rgb(20, 164, 196);
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
 }
+
 .inputBtn {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
+
+.inputBox {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.inputHome {
+    padding: 10px;
+    margin: 10px 0;
+    width: 72%;
+    border: 1px solid rgb(97, 166, 193);
+    font-size: 18px;
+    border-radius: 4px;
+}
+.formBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
 .btnHome {
-  margin: 10px 5px;
-  padding: 10px;
-  width: 120px;
-  background-color: rgb(20, 164, 196);
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
+    margin: 10px 5px;
+    padding: 10px;
+    width: 120px;
+    background-color: rgb(20, 164, 196);
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .btnHome:hover {
-  background-color: rgb(18, 144, 172);
+    background-color: rgb(18, 144, 172);
 }
 
 .btnAction:hover {
-  background-color: #2563eb;
+    background-color: #2563eb;
+}
+
+.backButton {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+@media (max-width: 640px) {
+  .backButton {
+    position: static;
+    margin-top: 20px;
+    text-align: left;
+  }
+}
+.tableImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px; /* optional: slight rounding for aesthetics */
 }
 
 
 .hotelTable {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
 }
 
-.hotelTable th, .hotelTable td {
-  border: 1px solid #ddd;
-  padding: 12px;
+.hotelTable th,
+.hotelTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
 }
 
 .hotelTable th {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 .hotelTable tr:hover {
-  background-color: #f9f9f9;
-  cursor: pointer;
+    background-color: #f9f9f9;
+    cursor: pointer;
 }
 
-.logoImg, .qrImg {
-  height: 60px;
-  object-fit: contain;
+.logoImg,
+.qrImg {
+    height: 60px;
+    object-fit: contain;
 }
 
 
 
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

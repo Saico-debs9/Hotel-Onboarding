@@ -8,6 +8,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
+    guest_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    hotel_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
+
   });
 
   return Booking;

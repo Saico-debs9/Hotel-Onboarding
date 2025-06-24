@@ -1,20 +1,27 @@
-// src/App.js
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/Homepage';
-import HotelPage from './pages/Hotelpage'; // create this later
-import Thanku from './pages/Thanku'; // create this later
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import AdminDashboard from './pages/AdminDashboard';
+import HotelBookingPage from './pages/HotelBookingPage';
+import HotelAdminDashboard from './pages/HotelAdminDashboard';
+import ThankYouPage from './pages/ThankYouPage';
 
-const App = () => {
+function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/hotel/:id" element={<HotelPage />} />
-        <Route path="/thank-you" element={<Thanku />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path='/register' element={<SignupPage />} />
+        <Route path="/hotel/:id/book" element={<HotelBookingPage />} />
+
+        <Route path="/hoteladmin/dashboard" element={<HotelAdminDashboard />} />
+        <Route path='/thank-you' element={<ThankYouPage />} />
+        {/* ... other routes */}
       </Routes>
     </Router>
   );
-};
-
+}
 export default App;
