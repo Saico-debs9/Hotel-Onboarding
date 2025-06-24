@@ -12,7 +12,7 @@ const HomePage = () => {
 
   // Fetch hotels
   useEffect(() => {
-    axios.get('/api/hotels')
+    axios.get('/api/admin/hotels')
       .then(res => setHotels(res.data))
       .catch(err => console.error('Error fetching hotels:', err));
   }, []);

@@ -5,6 +5,7 @@ import SignupPage from './pages/SignupPage';
 import AdminDashboard from './pages/AdminDashboard';
 import HotelBookingPage from './pages/HotelBookingPage';
 import HotelAdminDashboard from './pages/HotelAdminDashboard';
+import ThankYouPage from './pages/ThankYouPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/hotel/:id/book" element={<HotelBookingPage />} />
 
         <Route path="/hoteladmin/dashboard" element={<HotelAdminDashboard />} />
+        <Route path='/thank-you' element={<ThankYouPage />} />
         {/* ... other routes */}
       </Routes>
     </Router>

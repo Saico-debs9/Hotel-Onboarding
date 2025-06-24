@@ -1,46 +1,50 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const QRCode = require('qrcode');
 
-// GET all hotels
-router.get('/', async (req, res) => {
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => cb(null, uploadDir),
+  filename: (_, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+});
+
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+
+router.post('/', upload.single('logo'), async (req, res) => {
+  try {
+    const { name, address } = req.body;
+    const logoFileName = req.file ? req.file.filename : null;
+    const qrContent = `Hotel: ${name}\nAddress: ${address}`;
+    const qrFileName = `${Date.now()}-qr.png`;
+    const qrFilePath = path.join(__dirname, '..', 'uploads', qrFileName);
+
+    await QRCode.toFile(qrFilePath, qrContent);
+
+    const hotel = await db.Hotel.create({
+      name,
+      address,
+      logo: logoFileName,
+      qr_code_url: qrFileName,
+    });
+
+    res.status(201).json(hotel);
+  } catch (error) {
+    console.error('Hotel creation error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/', async (_, res) => {
   const hotels = await db.Hotel.findAll();
   res.json(hotels);
 });
 
-// GET single hotel
-router.get('/:id', async (req, res) => {
-  const hotel = await db.Hotel.findByPk(req.params.id);
-  if (!hotel) return res.status(404).json({ error: 'Hotel not found' });
-  res.json(hotel);
-});
-
-// POST new hotel (main admin)
-router.post('/', async (req, res) => {
-  try {
-    const { name, logo, address, qr_code_url } = req.body;
-    const hotel = await db.Hotel.create({ name, logo, address, qr_code_url });
-    res.json(hotel);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to create hotel' });
-  }
-});
-
-// DELETE a hotel
-router.delete('/:id', async (req, res) => {
-  try {
-    const hotel = await db.Hotel.findByPk(req.params.id);
-    if (!hotel) return res.status(404).json({ message: 'Hotel not found' });
-
-    await hotel.destroy();
-    res.status(200).json({ message: 'Hotel deleted successfully' });
-  } catch (err) {
-    console.error('Error deleting hotel:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// UPDATE a hotel
 router.put('/:id', async (req, res) => {
   try {
     const hotel = await db.Hotel.findByPk(req.params.id);
@@ -49,37 +53,35 @@ router.put('/:id', async (req, res) => {
     const { name, logo, address, qr_code_url } = req.body;
     await hotel.update({ name, logo, address, qr_code_url });
 
-    res.status(200).json({ message: 'Hotel updated successfully', hotel });
+    res.json({ message: 'Hotel updated', hotel });
   } catch (err) {
-    console.error('Error updating hotel:', err);
+    console.error('Update error:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-// POST /api/hotels/:id/book
-router.post('/:id/book', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const { name, email, phone, checkin_date, checkout_date } = req.body;
-    const hotelId = req.params.id;
+    const hotel = await db.Hotel.findByPk(req.params.id);
+    if (!hotel) return res.status(404).json({ message: 'Hotel not found' });
 
-    // Save guest info
-    const guest = await db.Guest.create({ name, email, phone, hotel_id: hotelId });
-
-    // Save booking info
-    const booking = await db.Booking.create({
-      guest_id: guest.id,
-      hotel_id: hotelId,
-      check_in: checkin_date,
-      check_out: checkout_date,
-    });
-
-    res.status(201).json({ message: 'Booking successful', booking });
+    await hotel.destroy();
+    res.json({ message: 'Hotel deleted' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Booking failed' });
+    console.error('Delete error:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
-
+router.get('/:id', async (req, res) => {
+  try {
+    const hotel = await db.Hotel.findByPk(req.params.id);
+    if (!hotel) return res.status(404).json({ error: 'Hotel not found' });
+    res.json(hotel);
+  } catch (err) {
+    console.error('Hotel fetch error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 module.exports = router;

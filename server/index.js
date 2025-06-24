@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./models');
@@ -14,11 +14,12 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const guestRoutes = require('./routes/guestRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-app.use('/api/auth', authRoutes);
+app.use('/api/admin/auth', authRoutes);
+app.use('/api/admin/hotels', hotelRoutes);
+app.use('/api/guest/bookings', bookingRoutes);
+app.use('/api/admin/guests', guestRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api/hotels', hotelRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/guests', guestRoutes);
 
 
 

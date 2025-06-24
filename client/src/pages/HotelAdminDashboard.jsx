@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BackButton from '../components/BackButton';
+import '../styles/App.css';
 
 const HotelAdminDashboard = () => {
   const [guests, setGuests] = useState([]);

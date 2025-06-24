@@ -16,6 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    padding-bottom: 60px;
+    position: relative;
 }
 
 .container {
@@ -122,6 +124,25 @@
     background-color: #2563eb;
 }
 
+.backButton {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+@media (max-width: 640px) {
+  .backButton {
+    position: static;
+    margin-top: 20px;
+    text-align: left;
+  }
+}
+.tableImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px; /* optional: slight rounding for aesthetics */
+}
 
 
 .hotelTable {
