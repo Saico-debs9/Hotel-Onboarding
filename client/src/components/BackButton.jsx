@@ -6,7 +6,7 @@ const BackButton = () => {
 
   return (
     <div className='backButton'>
-      <button onClick={() => navigate(-1)} className="btnHome">
+      <button onClick={() => navigate(-1)} className='btnHome'>
         ⬅ Back
       </button>
     </div>
@@ -14,3 +14,4 @@ const BackButton = () => {
 };
 
 export default BackButton;
+

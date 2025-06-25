@@ -8,14 +8,20 @@ const AdminDashboard = () => {
   const [form, setForm] = useState({ name: '', address: '', logo: '' });
   const [editingHotel, setEditingHotel] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
-    fetchHotels();
-  }, []);
+    fetchHotels(currentPage);
+  }, [currentPage]);
 
-  const fetchHotels = async () => {
-    const res = await axios.get('/api/admin/hotels');
-    setHotels(res.data);
+  const fetchHotels = async (page) => {
+    try {
+      const res = await axios.get(`/api/admin/hotels?page=${page}&limit=5`);
+      setHotels(res.data.hotels);
+      setTotalPages(res.data.totalPages);
+    } catch (err) {
+      console.error('Error fetching hotels:', err);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -32,13 +38,23 @@ const AdminDashboard = () => {
   };
 
   const handleUpdate = async () => {
+    const formData = new FormData();
+    formData.append('name', editingHotel.name);
+    formData.append('address', editingHotel.address);
+
+    if (editingHotel.logo instanceof File) {
+      formData.append('logo', editingHotel.logo);
+    }
+
     try {
-      await axios.put(`/api/admin/hotels/${editingHotel.id}`, editingHotel);
-      setHotels(prev =>
-        prev.map(h => (h.id === editingHotel.id ? editingHotel : h))
-      );
+      const res = await axios.put(`/api/admin/hotels/${editingHotel.id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      const updated = res.data.hotel;
+      setHotels(prev => prev.map(h => (h.id === updated.id ? updated : h)));
       alert('Hotel updated successfully');
-      setEditingHotel(null); // hide edit form
+      setEditingHotel(null);
     } catch (err) {
       console.error('Update failed', err);
       alert('Update failed');
@@ -59,7 +75,7 @@ const AdminDashboard = () => {
       alert('Hotel added successfully!');
       setForm({ name: '', address: '', logo: '' });
       fetchHotels();
-      setShowAddForm(false); // hide form
+      setShowAddForm(false);
     } catch (err) {
       console.error('Add hotel error:', err);
       alert('Failed to add hotel');
@@ -102,7 +118,7 @@ const AdminDashboard = () => {
           </form>
         )}
 
-        <table className="w-full border-collapse border border-gray-300 mt-6">
+        <table className="hotelTable">
           <thead>
             <tr className="bg-gray-100">
               <th className="border p-2">Name</th>
@@ -113,43 +129,59 @@ const AdminDashboard = () => {
             </tr>
           </thead>
           <tbody>
-  {hotels.map(h => {
-    const isEditing = editingHotel && editingHotel.id === h.id;
-    const disableActions = showAddForm || (editingHotel && !isEditing);
+            {hotels.map(h => {
+              const isEditing = editingHotel && editingHotel.id === h.id;
+              const disableActions = showAddForm || (editingHotel && !isEditing);
 
-    return (
-      <tr key={h.id}>
-        <td className="border p-2">{h.name}</td>
-        <td className="border p-2">{h.address}</td>
-        <td className="border p-2">
-          <img src={`/uploads/${h.logo}`} alt="Logo" className="tableImage" />
-        </td>
-        <td className="border p-2">
-          <img src={`/uploads/${h.qr_code_url}`} alt="QR Code" className="tableImage" />
-        </td>
-        <td className="border p-2">
-          <button
-            className={`btnHome ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onClick={() => !disableActions && setEditingHotel(h)}
-            disabled={disableActions}
-          >
-            Edit
-          </button>
+              return (
+                <tr key={h.id}>
+                  <td className="border p-2">{h.name}</td>
+                  <td className="border p-2">{h.address}</td>
+                  <td className="border p-2">
+                    <img src={`/uploads/${h.logo}`} alt="Logo" className="tableImage" />
+                  </td>
+                  <td className="border p-2">
+                    <img src={`/uploads/${h.qr_code_url}`} alt="QR Code" className="tableImage" />
+                  </td>
+                  <td className="border p-2">
+                    <button
+                      className={`btnHome ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      onClick={() => !disableActions && setEditingHotel(h)}
+                      disabled={disableActions}
+                    >
+                      Edit
+                    </button>
 
-          <button
-            className={`btnHome ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onClick={() => !disableActions && handleDelete(h.id)}
-            disabled={disableActions}
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    );
-  })}
-</tbody>
-
+                    <button
+                      className={`btnHome ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      onClick={() => !disableActions && handleDelete(h.id)}
+                      disabled={disableActions}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
+        <div className="pagination mt-4 flex justify-center items-center space-x-4">
+          <button
+            className="btnHome"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button
+            className="btnHome"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
 
         {editingHotel && (
           <div className="p-4 mt-4 bg-gray-200 rounded shadow">
@@ -179,8 +211,9 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
-        <BackButton />
+        
       </div>
+      <BackButton />
     </div>
   );
 };

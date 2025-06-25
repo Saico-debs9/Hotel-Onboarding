@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
+// Create hotel
 router.post('/', upload.single('logo'), async (req, res) => {
   try {
     const { name, address } = req.body;
@@ -40,19 +41,41 @@ router.post('/', upload.single('logo'), async (req, res) => {
   }
 });
 
-router.get('/', async (_, res) => {
-  const hotels = await db.Hotel.findAll();
-  res.json(hotels);
+// Get all hotels
+router.get('/', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await db.Hotel.findAndCountAll({
+      offset,
+      limit,
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.json({
+      hotels: rows,
+      currentPage: page,
+      totalPages: Math.ceil(count / limit),
+    });
+  } catch (err) {
+    console.error('Fetch hotels error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
-router.put('/:id', async (req, res) => {
+
+// Update hotel
+router.put('/:id', upload.single('logo'), async (req, res) => {
   try {
     const hotel = await db.Hotel.findByPk(req.params.id);
     if (!hotel) return res.status(404).json({ message: 'Hotel not found' });
 
-    const { name, logo, address, qr_code_url } = req.body;
-    await hotel.update({ name, logo, address, qr_code_url });
+    const { name, address } = req.body;
+    const logo = req.file ? req.file.filename : hotel.logo;
 
+    await hotel.update({ name, address, logo });
     res.json({ message: 'Hotel updated', hotel });
   } catch (err) {
     console.error('Update error:', err);
@@ -60,6 +83,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Delete hotel
 router.delete('/:id', async (req, res) => {
   try {
     const hotel = await db.Hotel.findByPk(req.params.id);
@@ -72,6 +96,8 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// Get hotel by ID
 router.get('/:id', async (req, res) => {
   try {
     const hotel = await db.Hotel.findByPk(req.params.id);
@@ -82,6 +108,5 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 module.exports = router;

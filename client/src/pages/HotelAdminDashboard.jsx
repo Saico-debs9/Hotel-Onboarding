@@ -8,7 +8,7 @@ const HotelAdminDashboard = () => {
   const [guests, setGuests] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/guests')
+    axios.get('/api/admin/guests')
       .then(res => setGuests(res.data))
       .catch(err => console.error('Error fetching guests:', err));
   }, []);
@@ -39,9 +39,13 @@ const HotelAdminDashboard = () => {
             ))}
           </tbody>
         </table>
+
+      </div>
+      <div className="backBtnWrapper">
         <BackButton />
       </div>
     </div>
+
   );
 };
 

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/App.css'
@@ -9,11 +9,22 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (token) {
+      if (role === 'main') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/hoteladmin/dashboard');
+      }
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/auth/login', { username, password });
+      const res = await axios.post('/api/admin/auth/login', { username, password });
 
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
@@ -21,9 +32,9 @@ const LoginPage = () => {
       alert('Login successful');
 
       if (res.data.role === 'main') {
-        navigate('/admin/dashboard');
+        navigate('/admin/dashboard',{replace: true});
       } else {
-        navigate('/hoteladmin/dashboard');
+        navigate('/hoteladmin/dashboard',{replace: true});
       }
     } catch (err) {
       alert('Login failed: ' + (err.response?.data?.message || err.message));
