@@ -41,9 +41,8 @@ const HotelAdminDashboard = () => {
         </table>
 
       </div>
-      <div className="backBtnWrapper">
         <BackButton />
-      </div>
+      
     </div>
 
   );

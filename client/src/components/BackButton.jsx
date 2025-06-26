@@ -5,11 +5,11 @@ const BackButton = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='backButton'>
-      <button onClick={() => navigate(-1)} className='btnHome'>
-        ⬅ Back
-      </button>
-    </div>
+
+    <button onClick={() => navigate(-1)} className='back-button'>
+      ⬅ Back
+    </button>
+
   );
 };
 
