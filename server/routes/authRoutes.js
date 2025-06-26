@@ -1,4 +1,4 @@
-// routes/authRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
   res.json({ token, role: admin.role });
 });
 
-// routes/authRoutes.js
+
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
   const hashed = await bcrypt.hash(password, 10);

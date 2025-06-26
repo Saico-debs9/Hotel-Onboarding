@@ -218,7 +218,7 @@
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 4px; /* optional: slight rounding for aesthetics */
+  border-radius: 4px; 
 }
 
 

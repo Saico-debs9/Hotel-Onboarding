@@ -19,11 +19,11 @@ const ThankYouPage = () => {
       }
       return prev - 1;
     });
-  }, 1000); // every 1 second
+  }, 1000); 
 
   return () => clearInterval(interval);
 }, []);
-// 10 seconds
+
 
 
   if (!booking) {

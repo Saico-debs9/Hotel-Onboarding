@@ -8,7 +8,7 @@ import ThankYouPage from './ThankYouPage';
 
 const HotelBookingPage = () => {
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Normalize today's time to 00:00
+  today.setHours(0, 0, 0, 0);
 
   const minDate = today.toISOString().split('T')[0];
 

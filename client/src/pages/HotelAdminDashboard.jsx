@@ -1,4 +1,3 @@
-// src/pages/HotelAdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BackButton from '../components/BackButton';
