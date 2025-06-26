@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/App.css'
 import BackButton from '../components/BackButton';
+import ThankYouPage from './ThankYouPage';
 
 const HotelBookingPage = () => {
   const today = new Date();
@@ -66,8 +67,20 @@ const HotelBookingPage = () => {
 
     try {
       await axios.post(`/api/guest/bookings/${id}`, formData);
-
+      navigate('/thank-you', {
+        state: {
+          booking: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            checkin_date: formData.checkin_date,
+            checkout_date: formData.checkout_date,
+            hotel_name: hotel?.name,
+          }
+        }
+      });
       alert("Booking successful!");
+
       setFormData({
         name: '',
         email: '',
@@ -77,6 +90,7 @@ const HotelBookingPage = () => {
         checkin_date: '',
         checkout_date: '',
       });
+
 
     } catch (err) {
       alert("Booking failed.");

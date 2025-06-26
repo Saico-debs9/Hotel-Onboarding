@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 
@@ -7,14 +7,24 @@ const ThankYouPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const booking = location.state?.booking;
+  const [count, setCount] = useState(10);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate('/');
-    }, 10000); // 10 seconds
+  const interval = setInterval(() => {
+    setCount(prev => {
+      if (prev <= 1) {
+        clearInterval(interval);
+        navigate('/');
+        return 0;
+      }
+      return prev - 1;
+    });
+  }, 1000); // every 1 second
 
-    return () => clearTimeout(timer);
-  }, [navigate]);
+  return () => clearInterval(interval);
+}, []);
+// 10 seconds
+
 
   if (!booking) {
     return (
@@ -38,7 +48,7 @@ const ThankYouPage = () => {
           <p><strong>Check-in:</strong> {booking.checkin_date}</p>
           <p><strong>Check-out:</strong> {booking.checkout_date}</p>
           <p><strong>Hotel:</strong> {booking.hotel_name}</p>
-          <p className="text-sm text-gray-600">You will be redirected to the homepage in 10 seconds.</p>
+          <p className="text-sm text-gray-600">You will be redirected to the homepage in {count} second{count>1?'s':''}.</p>
         </div>
         <div style={{ marginTop: '20px' }}>
           <BackButton label="Go to Home Now" target="/" />
